@@ -1,7 +1,26 @@
 <h2>Register</h2>
 <form method="POST">
   {% csrf_token %}
-  <input type="text" name="username" placeholder="Username" required>
-  <input type="password" name="password" placeholder="Password" required>
+  
+  <div>
+    <label for="id_username">Username</label>
+    {{ form.username }} 
+  </div>
+  
+  <div>
+    <label for="id_email">Email</label>
+    {{ form.email }}  
+  </div>
+
+  <div>
+    <label for="id_password1">Password</label>
+    {{ form.password1 }}  
+  </div>
+
+  <div>
+    <label for="id_password2">Password confirmation</label>
+    {{ form.password2 }}  
+  </div>
+
   <button type="submit">Register</button>
 </form>
