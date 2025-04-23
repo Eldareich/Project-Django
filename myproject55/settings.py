@@ -46,6 +46,7 @@ TEMPLATES = [
 ]
 
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,8 +54,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     # 'accounts', 
     # 'generator', 
+=======
+    'myapp', 
+>>>>>>> bcf1e9b3c3cae5b996da2073c491d77bcdbc4adc
 ]
 
 
@@ -86,6 +91,7 @@ TEMPLATES = [
         },
     },
 ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 WSGI_APPLICATION = 'myproject55.wsgi.application'
 
@@ -144,3 +150,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home' 
+STATIC_URL = '/static/'
