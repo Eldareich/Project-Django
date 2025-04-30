@@ -1,26 +1,30 @@
-<h2>Register</h2>
-<form method="POST">
-  {% csrf_token %}
-  
-  <div>
-    <label for="id_username">Username</label>
-    {{ form.username }} 
-  </div>
-  
-  <div>
-    <label for="id_email">Email</label>
-    {{ form.email }}  
-  </div>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <div style="text-align: center;">
+    <h2>Register</h2>
+    <form method="POST" style="display: flex; flex-direction: column; align-items: center;">
+      {% csrf_token %}
+      
+      <div style="margin-bottom: 10px;">
+        <label for="id_username">Username</label><br>
+        {{ form.username }}
+      </div>
 
-  <div>
-    <label for="id_password1">Password</label>
-    {{ form.password1 }}  
-  </div>
+      <div style="margin-bottom: 10px;">
+        <label for="id_email">Email</label><br>
+        {{ form.email }}
+      </div>
 
-  <div>
-    <label for="id_password2">Password confirmation</label>
-    {{ form.password2 }}  
-  </div>
+      <div style="margin-bottom: 10px;">
+        <label for="id_password1">Password</label><br>
+        {{ form.password1 }}
+      </div>
 
-  <button type="submit">Register</button>
-</form>
+      <div style="margin-bottom: 10px;">
+        <label for="id_password2">Password confirmation</label><br>
+        {{ form.password2 }}
+      </div>
+
+      <button type="submit" style="padding: 8px 16px; margin-top: 10px;">Register</button>
+    </form>
+  </div>
+</div>
