@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y">
+
+    <!-- ============================ COMPONENT REGISTER   ================================= -->
+    <div class="card mx-auto" style="max-width:580px; margin-top:11rem; box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+        <article class="card-body">
+            {% include 'includes/alert.html' %}
+            <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
+            <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label for="first_name">First name</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div class="alert alert-danger mt-2">
+                                {% for error in form.first_name.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
+                    <div class="col form-group">
+                        <label for="last_name">Last name</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <div class="alert alert-danger mt-2">
+                                {% for error in form.last_name.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
+                </div> <!-- form-row end.// -->
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="email">Email Address</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="alert alert-danger mt-2">
+                                {% for error in form.email.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group col-md-6">
+                        <label for="phone_number">Phone Number</label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <div class="alert alert-danger mt-2">
+                                {% for error in form.phone_number.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
+                </div> <!-- form-row.// -->
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="password">Create password</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="alert alert-danger mt-2">
+                                {% for error in form.password.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group col-md-6">
+                        <label for="confirm_password">Repeat password</label>
+                        {{ form.confirm_password }}
+                        {% if form.confirm_password.errors %}
+                            <div class="alert alert-danger mt-2">
+                                {% for error in form.confirm_password.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Register </button>
+                </div> <!-- form-group// -->
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger mt-2">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+        </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+    <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
+    <br><br>
+</section>
+
+{% endblock %}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user_profile.first_name }} {{ user_profile.last_name }} - Резюме</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        table.layout {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td.sidebar {
+            width: 30%;
+            background-color: #f2f2f2;
+            vertical-align: top;
+            padding: 25px;
+        }
+        td.main {
+            width: 70%;
+            vertical-align: top;
+            padding: 30px 40px;
+        }
+        h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-size: 17px;
+            margin-top: 25px;
+            border-left: 5px solid #00bcd4;
+            padding-left: 10px;
+            background: #eaf9fb;
+        }
+        p, li {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .photo-container {
+            width: 100%;
+            height: 180px;
+            background-color: #ddd;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .photo-container img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            color: #222;
+            font-size: 15px;
+            border-bottom: 1px solid #00bcd4;
+            padding-bottom: 4px;
+        }
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<table class="layout">
+    <tr>
+        <!-- Сайдбар -->
+        <td class="sidebar">
+            <div class="photo-container">
+                {% if profile_image_path %}
+                    <img src="{{ profile_image_path }}" alt="Фото">
+                {% else %}
+                    <span style="line-height:180px; color:#777;">Нет фото</span>
+                {% endif %}
+            </div>
+
+            <h1>{{ user_profile.first_name }}</h1>
+            <p><em>{{ user_profile.profession }}</em></p>
+
+            <div class="section-title">Контакты</div>
+            <p><span class="label">Телефон:</span> {{ user_profile.phone }}</p>
+            <p><span class="label">Email:</span> {{ user_profile.email }}</p>
+            <p><span class="label">LinkedIn:</span> {{ user_profile.linkedin_link }}</p>
+            <p><span class="label">GitHub:</span> {{ user_profile.github_link }}</p>
+            <p><span class="label">Город:</span> {{ user_profile.locality }}, {{ user_profile.city }}</p>
+
+            {% if user_profile.interest %}
+                <div class="section-title">Интересы</div>
+                <p>{{ user_profile.interest }}</p>
+            {% endif %}
+
+            {% if skills_list %}
+                <div class="section-title">Навыки</div>
+                <ul>
+                    {% for skill in skills_list %}
+                        <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </td>
+
+        <!-- Основной блок -->
+        <td class="main">
+            {% if user_profile.about %}
+                <h2>&#9658; О себе</h2>
+                <p>{{ user_profile.about }}</p>
+            {% endif %}
+
+            <h2>&#9658; Образование</h2>
+            <p><strong>Школа:</strong> {{ user_profile.school_name }}, {{ user_profile.school_location }}</p>
+            <p><strong>Колледж:</strong> {{ user_profile.college }}</p>
+            <p><strong>Университет:</strong> {{ user_profile.university }}</p>
+            <p><strong>Степень:</strong> {{ user_profile.degree }}</p>
+
+            {% if user_profile.work_experience %}
+                <h2>&#9658; Опыт работы</h2>
+                <p>{{ user_profile.work_experience }}</p>
+            {% endif %}
+
+            {% if user_profile.project %}
+                <h2>&#9658; Проекты</h2>
+                <p>{{ user_profile.project }}</p>
+            {% endif %}
+
+            {% if user_profile.certificate %}
+                <h2>&#9658; Сертификаты</h2>
+                <p>{{ user_profile.certificate }}</p>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

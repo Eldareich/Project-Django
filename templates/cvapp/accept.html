@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    C.V generator Website
+{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static "cvapp/accept.css" %}" />
+{% endblock %}
+
+{% block content %}
+<div style="margin-top: 6rem;">
+    <div class="container" style="background-color: white; padding-bottom: 2rem; box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; width: 70%;">
+        <h1 style="background-color: #1FCECB; text-align: center; margin-top: 5rem; padding: 1rem;">
+            Create Your Resume
+        </h1>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="POST" enctype="multipart/form-data" class="p-5">
+                    {% csrf_token %}
+                    {% for fm in form %}
+                        <div class="form-group mb-3">
+                            {{ fm.label_tag }}
+                            {{ fm }}
+                            {% if fm.errors %}
+                                <small class="text-danger">{{ fm.errors|striptags }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="alert alert-danger my-3">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    <input type="submit" value="Submit" class="btn btn-primary" style="background-color: navy; width: 12rem; margin-top: 2rem; font-size: 1.4rem; font-weight: bold;">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
