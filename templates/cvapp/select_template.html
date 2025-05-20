@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Select Resume Templates
+{% endblock %}
+
+{% block content %}
+<style>
+    .template-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .template-card {
+        background: #fff;
+        border: 3px solid transparent;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        text-align: center;
+        transition: transform 0.3s ease, border-color 0.3s;
+        cursor: pointer;
+    }
+
+    .template-card.selected {
+        border-color: #0d6efd;
+    }
+
+    .template-card img {
+        width: 100%;
+        max-height: 300px;
+        object-fit: contain;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .form-check-input {
+        display: none;
+    }
+
+    .form-check-label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+    }
+
+    .submit-btn {
+        margin-top: 30px;
+        padding: 10px 25px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="container py-5">
+    <h2 class="text-center text-primary mb-4" style="font-size: 2.5rem; font-weight: bold;">
+        <u>Select Resume Templates</u>
+    </h2>
+
+    {% if error %}
+        <div class="alert alert-danger text-center">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'select_template' %}">
+        {% csrf_token %}
+        {% if templates %}
+        <div class="template-grid">
+            {% for template in templates %}
+            <label class="template-card">
+                {% if template.image %}
+                    <img src="{{ template.image.url }}" alt="{{ template.name }}">
+                {% else %}
+                    <p><em>No image available</em></p>
+                {% endif %}
+                <input type="radio" class="form-check-input" name="template_ids" value="{{ template.id }}"
+                       {% if template in profile.resume_templates.all %}checked{% endif %}>
+                <div class="form-check-label">{{ template.name }}</div>
+            </label>
+            {% endfor %}
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary submit-btn">Save Selection</button>
+        </div>
+        {% else %}
+            <p class="text-center text-muted">No templates available.</p>
+        {% endif %}
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cards = document.querySelectorAll('.template-card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

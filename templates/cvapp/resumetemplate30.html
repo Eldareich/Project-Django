@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user_profile.first_name }} {{ user_profile.last_name }} - Резюме</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #f4f4f4;
+            color: #333;
+        }
+        .resume {
+            background: #fff;
+            max-width: 900px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #e53935;
+            padding-bottom: 15px;
+        }
+        .header img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .header p {
+            margin: 4px 0 0;
+            font-size: 14px;
+            color: #777;
+        }
+        .section {
+            margin-top: 30px;
+        }
+        .section h2 {
+            font-size: 18px;
+            color: #e53935;
+            border-bottom: 1px solid #e53935;
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+        }
+        .section p, .section li {
+            font-size: 14px;
+            margin: 6px 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .skills-container, .lang-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .skill-item, .lang-item {
+            width: 50%;
+            padding: 5px 0;
+        }
+        .dots {
+            display: inline-block;
+            margin-left: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            display: inline-block;
+            margin-right: 4px;
+        }
+        .dot.filled {
+            background: #e53935;
+        }
+        .badges span {
+            background: #e53935;
+            color: #fff;
+            padding: 3px 8px;
+            margin-right: 6px;
+            font-size: 12px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="resume">
+    <div class="header">
+        {% if profile_image_path %}
+            <img src="{{ profile_image_path }}" alt="Фото">
+        {% endif %}
+        <div>
+            <h1>{{ user_profile.first_name }} {{ user_profile.last_name }}</h1>
+            <p>{{ user_profile.profession }}</p>
+            <p>{{ user_profile.locality }}, {{ user_profile.city }} | {{ user_profile.phone }} | {{ user_profile.email }}</p>
+        </div>
+    </div>
+
+    {% if user_profile.about %}
+    <div class="section">
+        <h2>О себе</h2>
+        <p>{{ user_profile.about }}</p>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <h2>Образование</h2>
+        <p><strong>Школа:</strong> {{ user_profile.school_name }}, {{ user_profile.school_location }}</p>
+        <p><strong>Колледж:</strong> {{ user_profile.college }}</p>
+        <p><strong>Университет:</strong> {{ user_profile.university }}</p>
+        <p><strong>Степень:</strong> {{ user_profile.degree }}</p>
+    </div>
+
+    {% if user_profile.work_experience %}
+    <div class="section">
+        <h2>Опыт работы</h2>
+        <p>{{ user_profile.work_experience }}</p>
+    </div>
+    {% endif %}
+
+    {% if user_profile.skills %}
+    <div class="section">
+        <h2>Навыки</h2>
+        <div class="skills-container">
+            {% for skill in skills_list %}
+            <div class="skill-item">{{ skill }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <h2>Характер</h2>
+        <div class="badges">
+            <span>Ответственный</span>
+            <span>Коммуникабельный</span>
+            <span>Творческий</span>
+            <span>Пунктуальный</span>
+        </div>
+    </div>
+
+    {% if user_profile.project %}
+    <div class="section">
+        <h2>Проекты</h2>
+        <p>{{ user_profile.project }}</p>
+    </div>
+    {% endif %}
+
+    {% if user_profile.certificate %}
+    <div class="section">
+        <h2>Сертификаты</h2>
+        <p>{{ user_profile.certificate }}</p>
+    </div>
+    {% endif %}
+
+    {% if user_profile.interest %}
+    <div class="section">
+        <h2>Интересы</h2>
+        <p>{{ user_profile.interest }}</p>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

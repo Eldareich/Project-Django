@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4 " style="background-color:rgb(167, 199, 231); width:50%; padding:3rem; padding-top:7rem; box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+    <h1 class="mb-3" style="text-align:center; color:rgb(25, 25, 112); font-size:3rem; font-weight:bold;">Edit Profile</h1>
+    <div class="text-center d-flex flex-column align-items-center">
+        <img id="avatar" class="rounded-circle mb-4" style="width: 9rem; height: 9rem; object-fit: cover;" src="{{ userprofile.avatar }}" alt="Avatar" />
+        <div class="text-center" style="max-width: 30rem;">
+            <h1 id="realname">{{ userprofile.name }}</h1>
+            <div class="text-secondary mb-2 mt-n2">@{{ userprofile.userprofile.username }}</div>
+        </div>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group mb-3">
+            <label for="id_image" ><b>Image:</b></label>
+            <input type="file" class="form-control"  name="image" accept="image/*" id="id_image"> <small class="text-danger"></small>
+          </div>
+
+          <div class="form-group mb-3  row">
+            <label for="id_realname" class="col-sm-2 col-form-label"><b>Name:</b></label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" name="realname" value="" maxlength="20" id="id_realname"> <small class="text-danger"></small>
+            </div>
+          </div>
+
+          <div class="form-group mb-3 row">
+            <label for="id_localtion" class="col-sm-2 col-form-label"><b>Localtion:</b></label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" name="localtion" value="" maxlength="20" id="id_localtion"> <small class="text-danger"></small>
+            </div>
+          </div>
+
+          <div class="form-group mb-3 row">
+            <label for="id_bio" class="col-sm-2 col-form-label"><b>Bio:</b></label>
+            <div class="col-sm-10">
+             <textarea name="bio"  class="form-control" cols="40" rows="3" id="id_bio"></textarea> <small class="text-danger"></small>
+             </div>
+          </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-secondary ml-2" style="color:red; font-weight:bold;" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    </form>
+    <a class="mt-3 d-block " style="font-weight:bold;" href="{% url 'profile-delete' %}">Delete Profile</a>
+</div>
+
+<script>
+    // This updates the avatar
+    const fileInput = document.querySelector('input[type="file"]');
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const image = document.querySelector('#avatar');
+
+        if (file && file.type.includes('image')) {
+            const url = URL.createObjectURL(file);
+            image.src = url;
+        }
+    });
+
+    // This updates the name
+    const realnameInput = document.getElementById('id_realname');
+    const realnameOutput = document.getElementById('realname');
+
+    realnameInput.addEventListener('input', (event) => {
+        realnameOutput.innerText = event.target.value;
+    });
+</script>
+
+{% endblock %}

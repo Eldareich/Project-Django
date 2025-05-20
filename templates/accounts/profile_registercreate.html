@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-3">Complete your Profile</h1>
+    <div class="text-center d-flex flex-column align-items-center">
+        <img id="avatar" class="rounded-circle mb-4" style="width: 9rem; height: 9rem; object-fit: cover;" src="{{ user.profile.avatar }}" alt="Avatar" />
+        <div class="text-center" style="max-width: 30rem;">
+            <h1 id="realname">{{ user.profile.name }}</h1>
+            <div class="text-secondary mb-2 mt-n2">@{{ user.username }}</div>
+        </div>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-secondary ml-2" href="{{ request.META.HTTP_REFERER }}">Skip</a>
+    </form>
+</div>
+
+<script>
+    // This updates the avatar
+    const fileInput = document.querySelector('input[type="file"]');
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const image = document.querySelector('#avatar');
+
+        if (file && file.type.includes('image')) {
+            const url = URL.createObjectURL(file);
+            image.src = url;
+        }
+    });
+
+    // This updates the name
+    const realnameInput = document.getElementById('id_realname');
+    const realnameOutput = document.getElementById('realname');
+
+    realnameInput.addEventListener('input', (event) => {
+        realnameOutput.innerText = event.target.value;
+    });
+</script>
+
+{% endblock %}

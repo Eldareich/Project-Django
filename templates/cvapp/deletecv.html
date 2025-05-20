@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Deleted User
+{% endblock %}
+
+{% block css_files %}{% endblock %}
+
+{% block content %}
+<div class="container" style="; height:50vh ;background-color: white;">
+    <div class="row m-5" style="height:50vh;">
+        <div class="col-md-12 " >
+        <h1 style=" margin-top : 4rem;  color:red; text-align:center; "> Info of Deleted user </h1>
+        </div>
+    <div class="row m-5" style="height:100vh;">
+        <form method="POST">
+            {% csrf_token %}
+            <h2 style="color:maroon;font-weight:; margin-bottom:2rem;">Are you sure you want to delete <b><u>{{ review.first_name }} {{ review.surname }}'s</u></b> Resume</h2>
+
+            <button type="submit" class="btn btn-danger" style="width:12rem; margin-left:25rem; margin-top:2rem; font-weight:bold; font-size:1.5rem;">Confirm</button>
+            
+        </form>
+    </div>
+    </div>
+</div>  
+{% endblock %}

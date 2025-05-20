@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Information of Individual User
+{% endblock %}
+
+{% block content %}
+<div class="container my-5 p-4 rounded" style="background-color: skyblue; box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; max-width: 900px;">
+    <h1 class="text-center my-4 p-2 bg-white text-primary fw-bold">Information of Individual User</h1>
+
+    <div class="bg-white p-4 shadow rounded">
+        <h3 class="text-center fw-bold mb-3"><u>Checkout Your Resume Information</u></h3>
+        <p class="text-end text-danger fw-bold">Application No: {{ Visitor.id }}</p>
+
+        <div class="text-end mb-3">
+            {% if Visitor.profile_image and Visitor.profile_image.url %}
+                <img src="{{ Visitor.profile_image.url }}" alt="Profile Image" class="img-thumbnail rounded-circle" width="120" height="120">
+            {% else %}
+                <img src="{% static 'default_avatar.png' %}" alt="Default Avatar" class="img-thumbnail rounded-circle" width="120" height="120">
+            {% endif %}
+        </div>
+
+        <h4 class="text-danger fw-bold">Name of Candidate:</h4>
+        <h5 class="text-primary fw-bold">{{ Visitor.first_name }} {% if Visitor.surname %}{{ Visitor.surname }}{% endif %}</h5>
+        <h6>{{ Visitor.profession }}</h6>
+
+        <hr>
+        <h5 class="text-danger fw-bold">Personal Details</h5>
+        {% if Visitor.locality or Visitor.city %}
+            <p><b>Address:</b> {{ Visitor.locality }}, {{ Visitor.city }}</p>
+        {% endif %}
+        {% if Visitor.pin_code %}
+            <p><b>Pin Code:</b> {{ Visitor.pin_code }}</p>
+        {% endif %}
+        {% if Visitor.email %}
+            <p><b>Email:</b> {{ Visitor.email }}</p>
+        {% endif %}
+        {% if Visitor.phone %}
+            <p><b>Phone:</b> {{ Visitor.phone }}</p>
+        {% endif %}
+        {% if Visitor.linkedin_link %}
+            <p><b>LinkedIn:</b> <a href="{{ Visitor.linkedin_link }}" target="_blank">{{ Visitor.linkedin_link }}</a></p>
+        {% endif %}
+        {% if Visitor.github_link %}
+            <p><b>GitHub:</b> <a href="{{ Visitor.github_link }}" target="_blank">{{ Visitor.github_link }}</a></p>
+        {% endif %}
+
+        {% if Visitor.about %}
+        <hr>
+        <h5><b>About Yourself:</b></h5>
+        <p>{{ Visitor.about }}</p>
+        {% endif %}
+
+        {% if Visitor.work_experience %}
+        <hr>
+        <h5><b>Work Experience:</b></h5>
+        <p>{{ Visitor.work_experience }}</p>
+        {% endif %}
+
+        <hr>
+        <h5><b>Education:</b></h5>
+        <ul>
+            {% if Visitor.school_name %}
+                <li><b>School:</b> {{ Visitor.school_name }}</li>
+            {% endif %}
+            {% if Visitor.school_location %}
+                <li><b>School Location:</b> {{ Visitor.school_location }}</li>
+            {% endif %}
+            {% if Visitor.college %}
+                <li><b>College:</b> {{ Visitor.college }}</li>
+            {% endif %}
+            {% if Visitor.degree %}
+                <li><b>Degree:</b> {{ Visitor.degree }}</li>
+            {% endif %}
+            {% if Visitor.university %}
+                <li><b>University:</b> {{ Visitor.university }}</li>
+            {% endif %}
+        </ul>
+
+        {% if Visitor.skills %}
+        <hr>
+        <h5><b>Skills:</b></h5>
+        <p>{{ Visitor.skills }}</p>
+        {% endif %}
+
+        {% if Visitor.project %}
+        <hr>
+        <h5><b>Projects:</b></h5>
+        <p>{{ Visitor.project }}</p>
+        {% endif %}
+
+        {% if Visitor.certificate %}
+        <hr>
+        <h5><b>Certificates:</b></h5>
+        <p>{{ Visitor.certificate }}</p>
+        {% endif %}
+
+        {% if Visitor.interest %}
+        <hr>
+        <h5><b>Interests:</b></h5>
+        <p>{{ Visitor.interest }}</p>
+        {% endif %}
+
+        <div class="mt-4 d-flex flex-wrap justify-content-between">
+            <a href="{% url 'resume' Visitor.id %}" class="btn btn-warning mb-2">Download CV</a>
+            <a href="{% url 'select_template' %}?profile_id={{ Visitor.id }}" class="btn btn-secondary mb-2">Update Resume Template</a>
+            <div class="ms-auto">
+                <a href="{% url 'update' Visitor.id %}" class="btn btn-primary me-2 mb-2">Edit</a>
+                <a href="{% url 'deleteform' Visitor.id %}" class="btn btn-danger me-2 mb-2">Delete</a>
+                <a href="{% url 'list' %}" class="btn btn-success mb-2">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
